@@ -1,12 +1,25 @@
 import 'package:flutter/material.dart';
 
-class DownloadOptionsDialog extends StatelessWidget {
+class DownloadOptionsDialog extends StatefulWidget {
   final Function(String type, String quality) onDownload;
 
   const DownloadOptionsDialog({
     super.key,
     required this.onDownload,
   });
+
+  @override
+  State<DownloadOptionsDialog> createState() => _DownloadOptionsDialogState();
+}
+
+class _DownloadOptionsDialogState extends State<DownloadOptionsDialog> {
+  String selectedType = 'Video';
+  String selectedQuality = '1080p';
+
+  final Map<String, List<String>> qualityOptions = {
+    'Video': ['1080p', '720p', '480p'],
+    'Audio': ['320kbps', '256kbps', '128kbps'],
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +31,7 @@ class DownloadOptionsDialog extends StatelessWidget {
           const Text('Select media type and quality:'),
           const SizedBox(height: 16),
           DropdownButtonFormField<String>(
-            value: 'Video',
+            value: selectedType,
             items: const [
               DropdownMenuItem(
                 value: 'Video',
@@ -31,30 +44,27 @@ class DownloadOptionsDialog extends StatelessWidget {
             ],
             onChanged: (value) {
               if (value != null) {
-                onDownload(value, '1080p');
+                setState(() {
+                  selectedType = value;
+                  selectedQuality = qualityOptions[value]!.first;
+                });
               }
             },
           ),
           const SizedBox(height: 8),
           DropdownButtonFormField<String>(
-            value: '1080p',
-            items: const [
-              DropdownMenuItem(
-                value: '1080p',
-                child: Text('1080p'),
-              ),
-              DropdownMenuItem(
-                value: '720p',
-                child: Text('720p'),
-              ),
-              DropdownMenuItem(
-                value: '480p',
-                child: Text('480p'),
-              ),
-            ],
+            value: selectedQuality,
+            items: qualityOptions[selectedType]!
+                .map((quality) => DropdownMenuItem(
+                      value: quality,
+                      child: Text(quality),
+                    ))
+                .toList(),
             onChanged: (value) {
               if (value != null) {
-                onDownload('Video', value);
+                setState(() {
+                  selectedQuality = value;
+                });
               }
             },
           ),
@@ -66,7 +76,10 @@ class DownloadOptionsDialog extends StatelessWidget {
           child: const Text('Cancel'),
         ),
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            widget.onDownload(selectedType, selectedQuality);
+            Navigator.pop(context);
+          },
           child: const Text('Download'),
         ),
       ],
