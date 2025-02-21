@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../components/folder_list_item.dart';
 import '../controllers/video_controller.dart';
 
 class VideoView extends GetView<VideoController> {
@@ -26,14 +27,11 @@ class VideoView extends GetView<VideoController> {
               child: ListView.builder(
                 itemCount: 5, // Placeholder for actual folder count
                 itemBuilder: (context, index) {
-                  return Card(
-                    child: ListTile(
-                      leading: const Icon(Icons.folder),
-                      title: Text('Video Folder ${index + 1}'),
-                      onTap: () {
-                        // TODO: Handle folder tap
-                      },
-                    ),
+                  return FolderListItem(
+                    title: 'Video Folder ${index + 1}',
+                    onTap: () {
+                      // TODO: Handle folder tap
+                    },
                   );
                 },
               ),

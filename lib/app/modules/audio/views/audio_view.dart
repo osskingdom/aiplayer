@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../components/folder_list_item.dart';
 import '../controllers/audio_controller.dart';
 
 class AudioView extends GetView<AudioController> {
@@ -26,14 +27,11 @@ class AudioView extends GetView<AudioController> {
               child: ListView.builder(
                 itemCount: 5, // Placeholder for actual folder count
                 itemBuilder: (context, index) {
-                  return Card(
-                    child: ListTile(
-                      leading: const Icon(Icons.folder),
-                      title: Text('Audio Folder ${index + 1}'),
-                      onTap: () {
-                        // TODO: Handle folder tap
-                      },
-                    ),
+                  return FolderListItem(
+                    title: 'Audio Folder ${index + 1}',
+                    onTap: () {
+                      // TODO: Handle folder tap
+                    },
                   );
                 },
               ),

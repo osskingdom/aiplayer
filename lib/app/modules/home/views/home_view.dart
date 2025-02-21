@@ -11,10 +11,6 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Media Player'),
-        centerTitle: true,
-      ),
       body: Obx(() {
         switch (controller.currentIndex.value) {
           case 0:
