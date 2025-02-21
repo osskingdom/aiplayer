@@ -22,37 +22,52 @@ class YoutubeSaveView extends GetView<YoutubeSaveController> {
               children: [
                 Expanded(
                   child: TextField(
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Enter YouTube URL or title',
                       border: OutlineInputBorder(),
                     ),
+                    onChanged: (value) => controller.searchQuery.value = value,
+                    onSubmitted: (value) => controller.searchVideos(value),
                   ),
                 ),
                 const SizedBox(width: 8),
-                ElevatedButton(
-                  onPressed: () {},
+                Obx(() => ElevatedButton(
+                  onPressed: controller.isLoading.value
+                      ? null
+                      : () => controller.searchVideos(controller.searchQuery.value),
                   child: const Text('Search'),
-                ),
+                )),
               ],
             ),
             const SizedBox(height: 16),
-            Expanded(
-              child: ListView.builder(
-                itemCount: 3, // Placeholder for video list
-                itemBuilder: (context, index) {
-                  return VideoListItem(
-                    title: 'Video Title',
-                    channel: 'Channel Name',
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => const DownloadOptionsDialog(),
-                      );
-                    },
-                  );
-                },
-              ),
-            ),
+            Obx(() {
+              if (controller.isLoading.value) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              return Expanded(
+                child: ListView.builder(
+                  itemCount: controller.searchResults.length,
+                  itemBuilder: (context, index) {
+                    final video = controller.searchResults[index];
+                    return VideoListItem(
+                      title: video.title,
+                      channel: video.author,
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => DownloadOptionsDialog(
+                            onDownload: (type, quality) {
+                              controller.downloadVideo(video, quality, type);
+                              Navigator.pop(context);
+                            },
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
+              );
+            }),
           ],
         ),
       ),

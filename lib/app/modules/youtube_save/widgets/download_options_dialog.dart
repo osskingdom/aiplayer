@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
 class DownloadOptionsDialog extends StatelessWidget {
-  const DownloadOptionsDialog({super.key});
+  final Function(String type, String quality) onDownload;
+
+  const DownloadOptionsDialog({
+    super.key,
+    required this.onDownload,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +29,11 @@ class DownloadOptionsDialog extends StatelessWidget {
                 child: Text('Audio'),
               ),
             ],
-            onChanged: (value) {},
+            onChanged: (value) {
+              if (value != null) {
+                onDownload(value, '1080p');
+              }
+            },
           ),
           const SizedBox(height: 8),
           DropdownButtonFormField<String>(
@@ -43,7 +52,11 @@ class DownloadOptionsDialog extends StatelessWidget {
                 child: Text('480p'),
               ),
             ],
-            onChanged: (value) {},
+            onChanged: (value) {
+              if (value != null) {
+                onDownload('Video', value);
+              }
+            },
           ),
         ],
       ),
