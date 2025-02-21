@@ -29,9 +29,7 @@ class VideoView extends GetView<VideoController> {
                 itemBuilder: (context, index) {
                   return FolderListItem(
                     title: 'Video Folder ${index + 1}',
-                    onTap: () {
-                      // TODO: Handle folder tap
-                    },
+                    isVideo: true,
                   );
                 },
               ),

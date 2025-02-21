@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'file_list_view.dart';
 
 class FolderListItem extends StatelessWidget {
   final String title;
   final VoidCallback? onTap;
   final IconData icon;
+  final bool isVideo;
 
   const FolderListItem({
     Key? key,
     required this.title,
     this.onTap,
     this.icon = Icons.folder,
+    this.isVideo = true,
   }) : super(key: key);
 
   @override
@@ -18,7 +22,14 @@ class FolderListItem extends StatelessWidget {
       child: ListTile(
         leading: Icon(icon),
         title: Text(title),
-        onTap: onTap,
+        onTap: onTap ?? () {
+          Get.to(() => FileListView(
+            folderName: title,
+            files: List.generate(10, (index) => 
+              '${isVideo ? 'Video' : 'Audio'} File ${index + 1}.${isVideo ? 'mp4' : 'mp3'}'
+            ),
+          ));
+        },
       ),
     );
   }
