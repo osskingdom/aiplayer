@@ -10,6 +10,26 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
   // Initialize notifications plugin
+  await initializeNotifications();
+
+  // Check and request storage permissions
+  await requestStoragePermission();
+
+  final ThemeController themeController = Get.put(ThemeController());
+  
+  runApp(
+    GetMaterialApp(
+      title: "Application",
+      initialRoute: AppPages.initial,
+      getPages: AppPages.routes,
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      themeMode: themeController.isDarkMode.value ? ThemeMode.dark : ThemeMode.light,
+    ),
+  );
+}
+
+Future<void> initializeNotifications() async {
   const AndroidInitializationSettings initializationSettingsAndroid =
       AndroidInitializationSettings('@mipmap/ic_launcher');
   
@@ -21,24 +41,12 @@ Future<void> main() async {
       FlutterLocalNotificationsPlugin();
   
   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
-  
-  // Check and request storage permissions
+}
+
+Future<void> requestStoragePermission() async {
   final status = await Permission.storage.request();
   if (!status.isGranted) {
     SystemNavigator.pop(); // Exit the app if permission is denied
     return;
   }
-
-  final ThemeController themeController = Get.put(ThemeController());
-  
-  runApp(
-    GetMaterialApp(
-      title: "Application",
-      initialRoute: AppPages.INITIAL,
-      getPages: AppPages.routes,
-      theme: ThemeData.light(),
-      darkTheme: ThemeData.dark(),
-      themeMode: themeController.isDarkMode.value ? ThemeMode.dark : ThemeMode.light,
-    ),
-  );
 }
