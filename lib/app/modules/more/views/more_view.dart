@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../routes/app_pages.dart';
 import '../controllers/more_controller.dart';
 import '../controllers/theme_controller.dart';
 
@@ -50,6 +51,13 @@ class MoreView extends GetView<MoreController> {
               title: const Text('Send Feedback'),
               onTap: () {
                 // TODO: Handle feedback tap
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.download),
+              title: const Text('Save from YouTube'),
+              onTap: () {
+                Get.toNamed(Routes.YOUTUBE_SAVE);
               },
             ),
           ],
