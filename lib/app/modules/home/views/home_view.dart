@@ -18,7 +18,7 @@ class HomeView extends GetView<HomeController> {
           case 1:
             return const AudioView();
           case 2:
-            return const MoreView();
+            return MoreView();
           default:
             return const VideoView();
         }

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/more_controller.dart';
+import '../controllers/theme_controller.dart';
 
 class MoreView extends GetView<MoreController> {
-  const MoreView({Key? key}) : super(key: key);
+  final ThemeController themeController = Get.put(ThemeController());
+  MoreView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +18,12 @@ class MoreView extends GetView<MoreController> {
         padding: const EdgeInsets.all(16.0),
         child: ListView(
           children: [
+            Obx(() => SwitchListTile(
+              title: const Text('Dark Mode'),
+              secondary: const Icon(Icons.dark_mode),
+              value: themeController.isDarkMode.value,
+              onChanged: (value) => themeController.toggleTheme(),
+            )),
             ListTile(
               leading: const Icon(Icons.settings),
               title: const Text('App Settings'),

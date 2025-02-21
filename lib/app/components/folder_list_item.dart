@@ -9,12 +9,12 @@ class FolderListItem extends StatelessWidget {
   final bool isVideo;
 
   const FolderListItem({
-    Key? key,
+    super.key,
     required this.title,
     this.onTap,
     this.icon = Icons.folder,
     this.isVideo = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

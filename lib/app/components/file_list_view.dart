@@ -6,10 +6,10 @@ class FileListView extends StatelessWidget {
   final List<String> files;
 
   const FileListView({
-    Key? key,
+    super.key,
     required this.folderName,
     required this.files,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

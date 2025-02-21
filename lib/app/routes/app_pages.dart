@@ -34,7 +34,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.MORE,
-      page: () => const MoreView(),
+      page: () => MoreView(),
       binding: MoreBinding(),
     ),
   ];
