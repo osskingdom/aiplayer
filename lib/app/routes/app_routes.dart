@@ -4,9 +4,15 @@ part of 'app_pages.dart';
 abstract class Routes {
   Routes._();
   static const HOME = _Paths.HOME;
+  static const VIDEO = _Paths.VIDEO;
+  static const AUDIO = _Paths.AUDIO;
+  static const MORE = _Paths.MORE;
 }
 
 abstract class _Paths {
   _Paths._();
   static const HOME = '/home';
+  static const VIDEO = '/video';
+  static const AUDIO = '/audio';
+  static const MORE = '/more';
 }
